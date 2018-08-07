@@ -35,5 +35,16 @@ namespace HeroesRandomiser.Tests
             var result = await prismicService.GetMasterRef();
             Assert.NotNull(result);
         }
+
+        [Fact]
+        public async Task GetPaginatedResult()
+        {
+            var prismicService = new PrismicGenericService(Fixture.HttpClient, Fixture.Configuration);
+            var result = await prismicService.QueryApi("[[at(document.type, \"universe\")]]", 1);
+
+            Assert.NotNull(result);
+            Assert.NotEmpty(result);
+            Assert.True((result?.Count ?? 0) > 1);
+        }
     }
 }

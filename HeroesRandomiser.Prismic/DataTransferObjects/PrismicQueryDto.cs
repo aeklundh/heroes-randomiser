@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 
 namespace HeroesRandomiser.Prismic.DataTransferObjects
 {
@@ -20,12 +21,12 @@ namespace HeroesRandomiser.Prismic.DataTransferObjects
         public int TotalPages { get; set; }
 
         [JsonProperty("next_page")]
-        public Uri NextPage { get; set; }
+        public string NextPage { get; set; }
 
         [JsonProperty("prev_page")]
-        public Uri PreviousPage { get; set; }
+        public string PreviousPage { get; set; }
 
         [JsonProperty("results")]
-        public string SerialisedResults { get; set; }
+        public ICollection<PrismicQueryResult> Results { get; set; }
     }
 }

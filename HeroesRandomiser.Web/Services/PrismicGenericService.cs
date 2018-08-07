@@ -24,15 +24,18 @@ namespace HeroesRandomiser.Web.Services
 
         public async Task<PrismicRef> GetMasterRef()
         {
-            var resultDto = JsonConvert.DeserializeObject<PrismicRefDto>(await _httpClient.GetStringAsync(_configuration.GetValue<string>("Prismic:ApiUrl")));
+            var response = await _httpClient.GetAsync(_configuration.GetValue<string>("Prismic:ApiUrl"));
+            if (response.IsSuccessStatusCode)
+            {
+                var resultDto = JsonConvert.DeserializeObject<PrismicRefDto>(await response.Content.ReadAsStringAsync());
 
-            if (resultDto != null)
-                return resultDto.Refs.SingleOrDefault(x => x.IsMasterRef);
+                return resultDto?.Refs?.SingleOrDefault(x => x.IsMasterRef);
+            }
 
             return null;
         }
 
-        public async Task<ICollection<string>> QueryApi(string query)
+        public async Task<ICollection<PrismicQueryResult>> QueryApi(string query, int pageSize = 100)
         {
             if (_prismicRef?.Ref == null)
             {
@@ -43,31 +46,34 @@ namespace HeroesRandomiser.Web.Services
                 _prismicRef = masterRef;
             }
 
-            var results = new List<string>();
-            Uri nextPage = null;
+            var results = new List<PrismicQueryResult>();
+            string nextPage = null;
 
             do
             {
-                var response = JsonConvert.DeserializeObject<PrismicQueryDto>(await GetSerialisedResponse(query));
-                if (response.ResultsSize > 0)
-                {
-                    results.Add(response.SerialisedResults);
-                }
+                string response = await GetSerialisedResponse(nextPage ?? query, pageSize);
 
-                nextPage = response.NextPage;
+                var deserialised = JsonConvert.DeserializeObject<PrismicQueryDto>(response);
+                if (deserialised.ResultsSize > 0)
+                    results.AddRange(deserialised.Results);
+
+                nextPage = deserialised.NextPage;
             } while (nextPage != null);
 
             return results;
         }
 
-        private async Task<string> GetSerialisedResponse(string query)
+        private async Task<string> GetSerialisedResponse(string query, int pageSize)
         {
-            return await _httpClient.GetStringAsync(FormatQuery(query));
+            if (Uri.TryCreate(query, UriKind.Absolute, out var uri))
+                return await _httpClient.GetStringAsync(query);
+
+            return await _httpClient.GetStringAsync(FormatQuery(query, pageSize));
         }
 
-        private string FormatQuery(string query)
+        private string FormatQuery(string query, int pageSize)
         {
-            return $"{_configuration.GetValue<string>("Prismic:ApiUrl")}/?ref={_prismicRef.Ref}&pageSize=100&q={query}";
+            return $"{_configuration.GetValue<string>("Prismic:ApiUrl")}/documents/search?ref={_prismicRef.Ref}&pageSize={pageSize}&q={query}";
         }
     }
 }
