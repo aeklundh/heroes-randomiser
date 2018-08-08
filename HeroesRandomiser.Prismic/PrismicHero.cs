@@ -7,7 +7,7 @@ namespace HeroesRandomiser.Prismic
 {
     public class PrismicHero : Hero, IPrismicDocument
     {
-        public PrismicRef PrismicRef { get; }
+        public PrismicRef PrismicRef { get; set; }
 
         public string UniverseId { get; set; }
 

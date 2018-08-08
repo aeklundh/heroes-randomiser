@@ -1,3 +1,4 @@
+using HeroesRandomiser.Prismic;
 using HeroesRandomiser.Tests.Utilities;
 using HeroesRandomiser.Web.Services;
 using Microsoft.Extensions.Configuration;
@@ -40,7 +41,7 @@ namespace HeroesRandomiser.Tests
         public async Task GetPaginatedResult()
         {
             var prismicService = new PrismicGenericService(Fixture.HttpClient, Fixture.Configuration);
-            var result = await prismicService.QueryApi("[[at(document.type, \"universe\")]]", 1);
+            var result = await prismicService.QueryApi<PrismicUniverse>("[[at(document.type, \"universe\")]]", 1);
 
             Assert.NotNull(result);
             Assert.NotEmpty(result);

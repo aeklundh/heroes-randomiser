@@ -2,6 +2,8 @@
 {
     public interface IPrismicDocument
     {
-        PrismicRef PrismicRef { get; }
+        string Id { get; set; }
+
+        PrismicRef PrismicRef { get; set;  }
     }
 }

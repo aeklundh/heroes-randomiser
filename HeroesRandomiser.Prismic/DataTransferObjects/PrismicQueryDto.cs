@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace HeroesRandomiser.Prismic.DataTransferObjects
 {
-    public class PrismicQueryDto
+    public class PrismicQueryDto<T>
     {
         public int Page { get; set; }
 
@@ -27,6 +27,6 @@ namespace HeroesRandomiser.Prismic.DataTransferObjects
         public string PreviousPage { get; set; }
 
         [JsonProperty("results")]
-        public ICollection<PrismicQueryResult> Results { get; set; }
+        public ICollection<PrismicQueryResult<T>> Results { get; set; }
     }
 }

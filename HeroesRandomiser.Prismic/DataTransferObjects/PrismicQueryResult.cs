@@ -3,7 +3,7 @@ using System;
 
 namespace HeroesRandomiser.Prismic.DataTransferObjects
 {
-    public class PrismicQueryResult
+    public class PrismicQueryResult<T>
     {
         public string Id { get; set; }
 
@@ -17,6 +17,6 @@ namespace HeroesRandomiser.Prismic.DataTransferObjects
         [JsonProperty("last_publication_date")]
         public DateTime LastPublicationDate { get; set; }
 
-        public dynamic Data { get; set; }
+        public T Data { get; set; }
     }
 }

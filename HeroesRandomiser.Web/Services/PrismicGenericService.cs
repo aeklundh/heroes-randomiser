@@ -1,5 +1,6 @@
 ﻿using HeroesRandomiser.Prismic;
 using HeroesRandomiser.Prismic.DataTransferObjects;
+using HeroesRandomiser.Prismic.Interfaces;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System;
@@ -35,7 +36,7 @@ namespace HeroesRandomiser.Web.Services
             return null;
         }
 
-        public async Task<ICollection<PrismicQueryResult>> QueryApi(string query, int pageSize = 100)
+        public async Task<ICollection<PrismicQueryResult<T>>> QueryApi<T>(string query, int pageSize = 100) where T : IPrismicDocument
         {
             if (_prismicRef?.Ref == null)
             {
@@ -46,19 +47,24 @@ namespace HeroesRandomiser.Web.Services
                 _prismicRef = masterRef;
             }
 
-            var results = new List<PrismicQueryResult>();
+            var results = new List<PrismicQueryResult<T>>();
             string nextPage = null;
 
             do
             {
                 string response = await GetSerialisedResponse(nextPage ?? query, pageSize);
 
-                var deserialised = JsonConvert.DeserializeObject<PrismicQueryDto>(response);
+                var deserialised = JsonConvert.DeserializeObject<PrismicQueryDto<T>>(response);
                 if (deserialised.ResultsSize > 0)
                     results.AddRange(deserialised.Results);
 
                 nextPage = deserialised.NextPage;
             } while (nextPage != null);
+
+            results.ForEach(x => {
+                x.Data.Id = x.Id;
+                x.Data.PrismicRef = _prismicRef;
+            });
 
             return results;
         }
