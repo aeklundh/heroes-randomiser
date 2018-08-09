@@ -1,5 +1,6 @@
 ﻿using HeroesRandomiser.ContentTypes.HeroData;
 using HeroesRandomiser.Prismic.Interfaces;
+using HeroesRandomiser.Prismic.SpecialisedDocumentRelationships;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 
@@ -9,24 +10,30 @@ namespace HeroesRandomiser.Prismic
     {
         public PrismicRef PrismicRef { get; set; }
 
-        public string UniverseId { get; set; }
+        [JsonProperty("universe")]
+        public PrismicDocumentLink UniverseLink { get; set; }
+
+        [JsonProperty("image")]
+        public PrismicMediaLink PrismicImageLink { get; set; }
+
+        public override string Image => PrismicImageLink.IsValid && PrismicImageLink.Kind == PrismicMediaLinkKind.Image ? PrismicImageLink.Url : null; 
 
         [JsonProperty("gold_price")]
-        public override int GoldPrice { get; set; }
+        public override double? GoldPrice { get; set; }
 
         [JsonProperty("gem_price")]
-        public override int GemPrice { get; set; }
+        public override double? GemPrice { get; set; }
 
-        public ICollection<PrismicLink> RoleLinks { get; set; }
+        [JsonProperty("roles")]
+        public ICollection<RoleDocumentLink> RoleLinks { get; set; }
 
-        public ICollection<PrismicLink> TalentLinks { get; set; }
+        [JsonProperty("talents")]
+        public ICollection<PrismicTalent> DeserialisableTalents { get; set; }
 
         [JsonProperty("in-game_categories")]
-        public ICollection<PrismicLink> InGameCategoryLinks { get; set; }
+        public ICollection<CategoryDocumentLink> InGameCategoryLinks { get; set; }
 
-        public PrismicHero(PrismicRef prismicRef)
-        {
-            PrismicRef = prismicRef;
-        }
+        [JsonProperty("must_be_paired_with")]
+        public PrismicDocumentLink MustBePairedWithLink { get; set; }
     }
 }
