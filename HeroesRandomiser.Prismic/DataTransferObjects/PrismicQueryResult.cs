@@ -1,9 +1,10 @@
-﻿using Newtonsoft.Json;
+﻿using HeroesRandomiser.Prismic.Interfaces;
+using Newtonsoft.Json;
 using System;
 
 namespace HeroesRandomiser.Prismic.DataTransferObjects
 {
-    public class PrismicQueryResult<T>
+    public class PrismicQueryResult<T> where T : IPrismicDocument
     {
         public string Id { get; set; }
 
