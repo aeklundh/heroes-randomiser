@@ -47,5 +47,16 @@ namespace HeroesRandomiser.Tests
             Assert.NotEmpty(result);
             Assert.True((result?.Count ?? 0) > 1);
         }
+
+        [Fact]
+        public async Task GetHeroes()
+        {
+            var prismicService = new PrismicGenericService(Fixture.HttpClient, Fixture.Configuration);
+            var prismicHeroService = new PrismicHeroService(prismicService);
+
+            var result = await prismicHeroService.GetHeroes();
+            Assert.NotEmpty(result);
+            //TODO: assert query result has resolved relationships correctly
+        }
     }
 }
