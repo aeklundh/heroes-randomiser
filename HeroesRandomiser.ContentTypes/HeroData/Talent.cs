@@ -2,19 +2,17 @@
 {
     public class Talent
     {
-        public string Id { get; set; }
+        public virtual string Name { get; set; }
 
-        public string Name { get; set; }
+        public virtual double? Level { get; set; }
 
-        public int Level { get; set; }
+        public virtual string Type { get; set; }
+    }
 
-        public TalentType Type { get; set; }
-
-        public enum TalentType
-        {
-            Basic,
-            Heroic,
-            Storm
-        }
+    public class TalentTypes
+    {
+        public const string Basic = "Basic";
+        public const string Heroic = "Heroic";
+        public const string Storm = "Storm";
     }
 }
