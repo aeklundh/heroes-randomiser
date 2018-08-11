@@ -1,7 +1,7 @@
 ﻿using HeroesRandomiser.ContentTypes.HeroData;
 using Newtonsoft.Json;
 
-namespace HeroesRandomiser.Prismic
+namespace HeroesRandomiser.Prismic.HeroData
 {
     public class PrismicTalent : Talent
     {

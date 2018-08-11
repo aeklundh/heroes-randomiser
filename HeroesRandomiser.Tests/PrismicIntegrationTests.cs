@@ -1,8 +1,9 @@
-using HeroesRandomiser.Prismic;
+using HeroesRandomiser.Prismic.HeroData;
 using HeroesRandomiser.Tests.Utilities;
 using HeroesRandomiser.Web.Services;
 using Microsoft.Extensions.Configuration;
 using System;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Xunit;
@@ -56,7 +57,8 @@ namespace HeroesRandomiser.Tests
 
             var result = await prismicHeroService.GetHeroes();
             Assert.NotEmpty(result);
-            //TODO: assert query result has resolved relationships correctly
+            Assert.Contains(result, x => x.Roles.Any(y => y.RoleCategory != null));
+            Assert.Contains(result, x => x.InGameCategories.Any());
         }
     }
 }

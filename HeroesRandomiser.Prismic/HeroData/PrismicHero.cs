@@ -4,7 +4,7 @@ using HeroesRandomiser.Prismic.SpecialisedDocumentRelationships;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 
-namespace HeroesRandomiser.Prismic
+namespace HeroesRandomiser.Prismic.HeroData
 {
     public class PrismicHero : Hero, IPrismicDocument
     {

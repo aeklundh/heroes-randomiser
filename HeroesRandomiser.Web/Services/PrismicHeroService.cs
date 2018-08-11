@@ -1,7 +1,6 @@
 ﻿using HeroesRandomiser.ContentTypes.HeroData;
-using HeroesRandomiser.Prismic;
+using HeroesRandomiser.Prismic.HeroData;
 using HeroesRandomiser.Web.Services.Interfaces;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -36,18 +35,14 @@ namespace HeroesRandomiser.Web.Services
                 {
                     var category = inGameCategories.SingleOrDefault(x => x.Id == categoryLink.Category.Id);
                     if (category != null)
-                    {
                         hero.InGameCategories.Add(category);
-                    }
                 }
 
                 foreach (var roleLink in hero.RoleLinks)
                 {
                     var role = roles.SingleOrDefault(x => x.Id == roleLink.Role.Id);
                     if (role != null)
-                    {
                         hero.Roles.Add(role);
-                    }
                 }
             }
 
@@ -56,22 +51,37 @@ namespace HeroesRandomiser.Web.Services
 
         public async Task<ICollection<InGameCategory>> GetInGameCategories()
         {
-            throw new NotImplementedException();
+            var queryResult = await _prismicService.QueryApi<PrismicInGameCategory>("[[at(document.type, \"in-game_category\")]]");
+
+            return queryResult.Select(x => x.Data).Cast<InGameCategory>().ToList();
         }
 
         public async Task<ICollection<RoleCategory>> GetRoleCategories()
         {
-            throw new NotImplementedException();
+            var queryResult = await _prismicService.QueryApi<PrismicRoleCategory>("[[at(document.type, \"role_category\")]]");
+
+            return queryResult.Select(x => x.Data).Cast<RoleCategory>().ToList();
         }
 
         public async Task<ICollection<Role>> GetRoles()
         {
-            throw new NotImplementedException();
+            var queryResult = await _prismicService.QueryApi<PrismicRole>("[[at(document.type, \"role\")]]");
+
+            var prismicRoles = queryResult.Select(x => x.Data);
+
+            var roleCategories = await GetRoleCategories();
+
+            foreach (var role in prismicRoles)
+                role.RoleCategory = roleCategories.SingleOrDefault(x => x.Id == role.RoleCategoryLink.Id);
+
+            return prismicRoles.Cast<Role>().ToList();
         }
 
         public async Task<ICollection<Universe>> GetUniverses()
         {
-            throw new NotImplementedException();
+            var queryResult = await _prismicService.QueryApi<PrismicUniverse>("[[at(document.type, \"universe\")]]");
+
+            return queryResult.Select(x => x.Data).Cast<Universe>().ToList();
         }
     }
 }
