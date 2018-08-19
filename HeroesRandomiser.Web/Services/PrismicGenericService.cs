@@ -15,7 +15,7 @@ namespace HeroesRandomiser.Web.Services
     {
         private readonly HttpClient _httpClient;
         private readonly IConfiguration _configuration;
-        private PrismicRef _prismicRef;
+        public PrismicRef PrismicRef;
 
         public PrismicGenericService(HttpClient httpClient, IConfiguration configuration)
         {
@@ -38,13 +38,13 @@ namespace HeroesRandomiser.Web.Services
 
         public async Task<ICollection<PrismicQueryResult<T>>> QueryApi<T>(string query, int pageSize = 100) where T : IPrismicDocument
         {
-            if (_prismicRef?.Ref == null)
+            if (PrismicRef?.Ref == null)
             {
                 var masterRef = await GetMasterRef();
                 if (masterRef == null)
                     return null;
 
-                _prismicRef = masterRef;
+                PrismicRef = masterRef;
             }
 
             var results = new List<PrismicQueryResult<T>>();
@@ -63,7 +63,7 @@ namespace HeroesRandomiser.Web.Services
 
             results.ForEach(x => {
                 x.Data.Id = x.Id;
-                x.Data.PrismicRef = _prismicRef;
+                x.Data.PrismicRef = PrismicRef;
             });
 
             return results;
@@ -79,7 +79,7 @@ namespace HeroesRandomiser.Web.Services
 
         private string FormatQuery(string query, int pageSize)
         {
-            return $"{_configuration.GetValue<string>("Prismic:ApiUrl")}/documents/search?ref={_prismicRef.Ref}&pageSize={pageSize}&q={query}";
+            return $"{_configuration.GetValue<string>("Prismic:ApiUrl")}/documents/search?ref={PrismicRef.Ref}&pageSize={pageSize}&q={query}";
         }
     }
 }
