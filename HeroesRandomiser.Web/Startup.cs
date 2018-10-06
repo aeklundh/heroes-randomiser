@@ -1,10 +1,12 @@
+using HeroesRandomiser.Web.Services;
+using HeroesRandomiser.Web.Services.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.Net.Http;
 
 namespace HeroesRandomiser.Web
 {
@@ -22,6 +24,10 @@ namespace HeroesRandomiser.Web
         {
             services.AddMemoryCache();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            services.AddScoped<IHeroService, PrismicHeroService>();
+            services.AddScoped<PrismicGenericService>();
+            services.AddScoped<HttpClient>();
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>

@@ -14,18 +14,18 @@ namespace HeroesRandomiser.Web.Services
     public class PrismicGenericService
     {
         private readonly HttpClient _httpClient;
-        private readonly IConfiguration _configuration;
+        private readonly string _prismicApiUrl;
         public PrismicRef PrismicRef;
 
         public PrismicGenericService(HttpClient httpClient, IConfiguration configuration)
         {
             _httpClient = httpClient;
-            _configuration = configuration;
+            _prismicApiUrl = configuration.GetValue<string>("Prismic:ApiUrl");
         }
 
         public async Task<PrismicRef> GetMasterRef()
         {
-            var response = await _httpClient.GetAsync(_configuration.GetValue<string>("Prismic:ApiUrl"));
+            var response = await _httpClient.GetAsync(_prismicApiUrl);
             if (response.IsSuccessStatusCode)
             {
                 var resultDto = JsonConvert.DeserializeObject<PrismicRefDto>(await response.Content.ReadAsStringAsync());
@@ -52,7 +52,7 @@ namespace HeroesRandomiser.Web.Services
 
             do
             {
-                string response = await GetSerialisedResponse(nextPage ?? query, pageSize);
+                var response = await GetSerialisedResponse(nextPage ?? query, pageSize);
 
                 var deserialised = JsonConvert.DeserializeObject<PrismicQueryDto<T>>(response);
                 if (deserialised.ResultsSize > 0)
@@ -61,7 +61,8 @@ namespace HeroesRandomiser.Web.Services
                 nextPage = deserialised.NextPage;
             } while (nextPage != null);
 
-            results.ForEach(x => {
+            results.ForEach(x =>
+            {
                 x.Data.Id = x.Id;
                 x.Data.PrismicRef = PrismicRef;
             });
@@ -77,9 +78,6 @@ namespace HeroesRandomiser.Web.Services
             return await _httpClient.GetStringAsync(FormatQuery(query, pageSize));
         }
 
-        private string FormatQuery(string query, int pageSize)
-        {
-            return $"{_configuration.GetValue<string>("Prismic:ApiUrl")}/documents/search?ref={PrismicRef.Ref}&pageSize={pageSize}&q={query}";
-        }
+        private string FormatQuery(string query, int pageSize) => $"{_prismicApiUrl}/documents/search?ref={PrismicRef.Ref}&pageSize={pageSize}&q={query}";
     }
 }
