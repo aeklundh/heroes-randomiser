@@ -1,0 +1,1 @@
+export const FETCH_UNIVERSES = "FETCH_UNIVERSES";
