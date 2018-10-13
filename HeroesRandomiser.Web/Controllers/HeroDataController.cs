@@ -1,5 +1,6 @@
-﻿using HeroesRandomiser.ContentTypes.HeroData;
+﻿using AutoMapper;
 using HeroesRandomiser.Web.Services.Interfaces;
+using HeroesRandomiser.Web.ViewModels.HeroData;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -10,30 +11,24 @@ namespace HeroesRandomiser.Web.Controllers
     public class HeroDataController : Controller
     {
         private readonly IHeroService _heroService;
+        private readonly IMapper _mapper;
 
-        public HeroDataController(IHeroService heroService)
+        public HeroDataController(IHeroService heroService, IMapper mapper)
         {
             _heroService = heroService;
+            _mapper = mapper;
         }
 
         [HttpGet]
         [Route("heroes")]
-        public async Task<IEnumerable<Hero>> GetHeroes() => await _heroService.GetHeroes();
+        public async Task<IEnumerable<HeroViewModel>> GetHeroes() => _mapper.Map<IEnumerable<HeroViewModel>>(await _heroService.GetHeroes());
 
         [HttpGet]
         [Route("ingamecategories")]
-        public async Task<IEnumerable<InGameCategory>> GetInGameCategories() => await _heroService.GetInGameCategories();
-
-        [HttpGet]
-        [Route("roles")]
-        public async Task<IEnumerable<Role>> GetRoles() => await _heroService.GetRoles();
-
-        [HttpGet]
-        [Route("rolecategories")]
-        public async Task<IEnumerable<RoleCategory>> GetRoleCategories() => await _heroService.GetRoleCategories();
+        public async Task<IEnumerable<InGameCategoryViewModel>> GetInGameCategories() => _mapper.Map<IEnumerable<InGameCategoryViewModel>>(await _heroService.GetInGameCategories());
 
         [HttpGet]
         [Route("universes")]
-        public async Task<IEnumerable<Universe>> GetUniverses() => await _heroService.GetUniverses();
+        public async Task<IEnumerable<UniverseViewModel>> GetUniverses() => _mapper.Map<IEnumerable<UniverseViewModel>>(await _heroService.GetUniverses());
     }
 }

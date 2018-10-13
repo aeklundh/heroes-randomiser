@@ -1,3 +1,4 @@
+using AutoMapper;
 using HeroesRandomiser.Web.Services;
 using HeroesRandomiser.Web.Services.Interfaces;
 using Microsoft.AspNetCore.Builder;
@@ -23,6 +24,7 @@ namespace HeroesRandomiser.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMemoryCache();
+            services.AddAutoMapper();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddScoped<IHeroService, PrismicHeroService>();
