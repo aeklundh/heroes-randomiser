@@ -18,7 +18,7 @@ const inGameCategoriesReducer = (state = initialState, action) => {
     case FETCH_INGAMECATEGORIES_SUCCESS:
       return {
         ...state,
-        universes: action.payload,
+        inGameCategories: action.payload,
         isFailed: false,
         isLoading: false
       };
