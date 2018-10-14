@@ -2,6 +2,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
+import { ThemeProvider } from 'styled-components';
+import theme from '../style/_theme';
+import { Viewport, MainBody } from '../style/pageLayout';
+import Header from '../components/Header'
+import Footer from '../components/Footer'
+
 import { fetchHeroes } from '../store/heroes/actions';
 import { fetchInGameCategories } from '../store/inGameCategories/actions';
 import { fetchUniverses } from '../store/universes/actions';
@@ -38,30 +44,48 @@ class Layout extends Component {
     render() {
         if (this.props.heroes.isLoading) {
             return (
-                <section className="main-body">
-                    <p>Loading</p>
-                </section>
+                <ThemeProvider theme={theme}>
+                    <Viewport>
+                        <Header />
+                        <MainBody>
+                            <p>Loading</p>
+                        </MainBody>
+                        <Footer />
+                    </Viewport>
+                </ThemeProvider>
             );
         }
 
         if (this.props.heroes.isFailed) {
             return (
-                <section className="main-body">
-                    <p>Could not fetch hero data</p>
-                </section>
+                <ThemeProvider theme={theme}>
+                    <Viewport>
+                        <Header />
+                        <MainBody>
+                            <p>Could not fetch hero data</p>
+                        </MainBody>
+                        <Footer />
+                    </Viewport>
+                </ThemeProvider>
             );
         }
 
         const { name } = this.state.randomisedHero;
 
         return (
-            <section className="main-body">
-                <h1>Heroes Randomiser</h1>
-                <div>
-                    <p>{name}</p>
-                </div>
-                <button onClick={this.randomiseSingleHero}>Random me!</button>
-            </section>
+            <ThemeProvider theme={theme}>
+                <Viewport>
+                    <Header />
+                    <MainBody>
+                        <h1>Heroes Randomiser</h1>
+                        <div>
+                            <p>{name}</p>
+                        </div>
+                        <button onClick={this.randomiseSingleHero}>Random me!</button>
+                    </MainBody>
+                    <Footer />
+                </Viewport>
+            </ThemeProvider>
         );
     }
 }

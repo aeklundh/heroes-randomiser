@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
+import 'normalize.css';
 
 import configureStore from './store/configureStore';
 import Layout from './containers/Layout';
-
-import './App.css';
 
 const store = configureStore();
 
