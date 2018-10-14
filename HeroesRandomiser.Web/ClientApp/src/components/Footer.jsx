@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
 
 const StyledFooter = styled.footer`
@@ -8,7 +8,7 @@ const StyledFooter = styled.footer`
     color: ${props => props.theme.colours.baseText1};
 `;
 
-class Footer extends PureComponent {
+class Footer extends Component {
     render() {
         return (
             <StyledFooter>

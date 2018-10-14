@@ -1,4 +1,6 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+
 import styled from 'styled-components';
 
 const HeaderLogo = styled.div`
@@ -19,13 +21,15 @@ const HeaderList = styled.ul`
     display: inline-block;
 `;
 
-class Header extends PureComponent {
+class Header extends Component {
     render() {
         return (
             <StyledHeader>
-                <HeaderLogo />
+                <Link to="/">
+                    <HeaderLogo />
+                </Link>
                 <HeaderList>
-                    <li>About</li>
+                    <Link to="/about">About</Link>
                 </HeaderList>
             </StyledHeader>
         );
