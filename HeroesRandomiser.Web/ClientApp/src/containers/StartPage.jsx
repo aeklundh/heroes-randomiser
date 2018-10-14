@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
+import Spinner from '../style/Spinner';
+
 import { fetchHeroes } from '../store/heroes/actions';
 import { fetchInGameCategories } from '../store/inGameCategories/actions';
 import { fetchUniverses } from '../store/universes/actions';
@@ -39,7 +41,7 @@ class StartPage extends Component {
         if (this.props.heroes.isLoading) {
             return (
                 <section>
-                    <p>Loading</p>
+                    <Spinner/>
                 </section>
             );
         }
