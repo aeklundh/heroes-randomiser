@@ -51,7 +51,7 @@ namespace HeroesRandomiser.Web.Services
 
         public async Task<ICollection<PrismicQueryResult<T>>> QueryApi<T>(string query, int pageSize = 100) where T : IPrismicDocument
         {
-            _logger.LogWarning($"Querying Prismic API: \n\t{query}\n\tSize: {pageSize}");
+            _logger.LogInformation($"Querying Prismic API: \n\t{query}\n\tSize: {pageSize}");
 
             var masterRef = await GetMasterRef();
 
