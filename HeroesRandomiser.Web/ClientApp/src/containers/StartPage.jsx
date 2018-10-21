@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import Spinner from '../style/Spinner';
+import { MainBodySection } from '../style/pageLayout';
 
 import { fetchHeroes } from '../store/heroes/actions';
 import { fetchInGameCategories } from '../store/inGameCategories/actions';
@@ -40,30 +41,30 @@ class StartPage extends Component {
     render() {
         if (this.props.heroes.isLoading) {
             return (
-                <section>
+                <MainBodySection>
                     <Spinner/>
-                </section>
+                </MainBodySection>
             );
         }
 
         if (this.props.heroes.isFailed) {
             return (
-                <section>
+                <MainBodySection>
                     <p>Could not fetch hero data</p>
-                </section>
+                </MainBodySection>
             );
         }
 
         const { name } = this.state.randomisedHero;
 
         return (
-            <section>
+            <MainBodySection>
                 <h1>Heroes Randomiser</h1>
                 <div>
                     <p>{name}</p>
                 </div>
                 <button onClick={this.randomiseSingleHero}>Random me!</button>
-            </section>
+            </MainBodySection>
         );
     }
 }
