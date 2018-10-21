@@ -1,4 +1,5 @@
 using AutoMapper;
+using HeroesRandomiser.Web.Caching;
 using HeroesRandomiser.Web.Services;
 using HeroesRandomiser.Web.Services.Interfaces;
 using Microsoft.AspNetCore.Builder;
@@ -20,25 +21,24 @@ namespace HeroesRandomiser.Web
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMemoryCache();
             services.AddAutoMapper();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            services.AddScoped<IHeroService, PrismicHeroService>();
-            services.AddScoped<PrismicGenericService>();
             services.AddScoped<HttpClient>();
+            services.AddScoped<CacheProvider>();
+            services.AddScoped<PrismicCacheProvider>();
+            services.AddScoped<PrismicGenericService>();
+            services.AddScoped<IHeroService, PrismicHeroService>();
 
-            // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/build";
             });
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())

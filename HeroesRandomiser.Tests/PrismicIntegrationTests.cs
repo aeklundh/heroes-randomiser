@@ -1,8 +1,10 @@
 using HeroesRandomiser.Prismic.HeroData;
 using HeroesRandomiser.Tests.Utilities;
+using HeroesRandomiser.Web.Caching;
 using HeroesRandomiser.Web.Services;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging.Abstractions;
 using System;
 using System.Diagnostics;
 using System.Linq;
@@ -16,12 +18,9 @@ namespace HeroesRandomiser.Tests
     public class PrismicIntegrationTestsFixture : IDisposable
     {
         public HttpClient HttpClient { get; set; } = new HttpClient();
-        public IConfiguration Configuration { get; set; } = TestConfigurationUtility.GetTestConfiguration();
+        public IConfiguration Configuration { get; set; } = TestConfigurationFactory.GetTestConfiguration();
 
-        public void Dispose()
-        {
-            HttpClient.Dispose();
-        }
+        public void Dispose() => HttpClient.Dispose();
     }
 
     public class PrismicIntegrationTests : IClassFixture<PrismicIntegrationTestsFixture>
@@ -38,7 +37,7 @@ namespace HeroesRandomiser.Tests
         [Fact]
         public async Task GetApiRef()
         {
-            var prismicService = new PrismicGenericService(_fixture.HttpClient, _fixture.Configuration);
+            var prismicService = new PrismicGenericService(new NullLogger<PrismicGenericService>(), _fixture.HttpClient, TestCacheFactory.BuildPrismicCacheProvider(), _fixture.Configuration);
             var result = await prismicService.GetMasterRef();
             Assert.NotNull(result);
         }
@@ -46,7 +45,7 @@ namespace HeroesRandomiser.Tests
         [Fact]
         public async Task GetPaginatedResult()
         {
-            var prismicService = new PrismicGenericService(_fixture.HttpClient, _fixture.Configuration);
+            var prismicService = new PrismicGenericService(new NullLogger<PrismicGenericService>(), _fixture.HttpClient, TestCacheFactory.BuildPrismicCacheProvider(), _fixture.Configuration);
             var result = await prismicService.QueryApi<PrismicUniverse>("[[at(document.type, \"universe\")]]", 1);
 
             Assert.NotNull(result);
@@ -57,9 +56,9 @@ namespace HeroesRandomiser.Tests
         [Fact]
         public async Task GetHeroes()
         {
-            var cache = new MemoryCache(new MemoryCacheOptions());
-            var prismicService = new PrismicGenericService(_fixture.HttpClient, _fixture.Configuration);
-            var prismicHeroService = new PrismicHeroService(prismicService, cache);
+
+            var prismicService = new PrismicGenericService(new NullLogger<PrismicGenericService>(), _fixture.HttpClient, TestCacheFactory.BuildPrismicCacheProvider(), _fixture.Configuration);
+            var prismicHeroService = new PrismicHeroService(prismicService, TestCacheFactory.BuildPrismicCacheProvider());
 
             var result = await prismicHeroService.GetHeroes();
             Assert.NotEmpty(result);
@@ -71,8 +70,10 @@ namespace HeroesRandomiser.Tests
         public async Task UtiliseCacheWithHeroData()
         {
             var cache = new MemoryCache(new MemoryCacheOptions());
-            var prismicService = new PrismicGenericService(_fixture.HttpClient, _fixture.Configuration);
-            var prismicHeroService = new PrismicHeroService(prismicService, cache);
+            var cacheProvider = new CacheProvider(cache);
+            var prismicCacheProvider = new PrismicCacheProvider(cacheProvider);
+            var prismicService = new PrismicGenericService(new NullLogger<PrismicGenericService>(), _fixture.HttpClient, TestCacheFactory.BuildPrismicCacheProvider(), _fixture.Configuration);
+            var prismicHeroService = new PrismicHeroService(prismicService, prismicCacheProvider);
 
             var timer = new Stopwatch();
 

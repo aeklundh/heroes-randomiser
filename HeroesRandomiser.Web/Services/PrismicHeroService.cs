@@ -1,10 +1,7 @@
 ﻿using HeroesRandomiser.ContentTypes.HeroData;
-using HeroesRandomiser.Prismic;
 using HeroesRandomiser.Prismic.HeroData;
 using HeroesRandomiser.Web.Caching;
 using HeroesRandomiser.Web.Services.Interfaces;
-using Microsoft.Extensions.Caching.Memory;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,17 +11,17 @@ namespace HeroesRandomiser.Web.Services
     public class PrismicHeroService : IHeroService
     {
         private readonly PrismicGenericService _prismicService;
-        private readonly IMemoryCache _cache;
+        private readonly PrismicCacheProvider _prismicCacheProvider;
 
-        public PrismicHeroService(PrismicGenericService prismicService, IMemoryCache cache)
+        public PrismicHeroService(PrismicGenericService prismicService, PrismicCacheProvider cacheProvider)
         {
             _prismicService = prismicService;
-            _cache = cache;
+            _prismicCacheProvider = cacheProvider;
         }
 
         public async Task<ICollection<Hero>> GetHeroes()
         {
-            var cachedHeroes = await TryGetCacheItem<ICollection<Hero>>(CacheKeys.Heroes);
+            var cachedHeroes = _prismicCacheProvider.TryGetPrismicCacheItem<ICollection<Hero>>(await _prismicService.GetMasterRef(), CacheKeys.Heroes);
             if (cachedHeroes != null)
                 return cachedHeroes;
 
@@ -58,7 +55,7 @@ namespace HeroesRandomiser.Web.Services
                 }
 
                 var retVal = prismicHeroes.Cast<Hero>().ToList();
-                SetCacheItem(queryResult.First().Data.PrismicRef, CacheKeys.Heroes, retVal);
+                _prismicCacheProvider.SetPrismicCacheItem(queryResult.First().Data.PrismicRef, CacheKeys.Heroes, retVal);
 
                 return retVal;
             }
@@ -68,7 +65,7 @@ namespace HeroesRandomiser.Web.Services
 
         public async Task<ICollection<InGameCategory>> GetInGameCategories()
         {
-            var cachedInGameCategories = await TryGetCacheItem<ICollection<InGameCategory>>(CacheKeys.InGameCategories);
+            var cachedInGameCategories = _prismicCacheProvider.TryGetPrismicCacheItem<ICollection<InGameCategory>>(await _prismicService.GetMasterRef(), CacheKeys.InGameCategories);
             if (cachedInGameCategories != null)
                 return cachedInGameCategories;
 
@@ -76,7 +73,7 @@ namespace HeroesRandomiser.Web.Services
             if (queryResult != null && queryResult.Any())
             {
                 var retVal = queryResult.Select(x => x.Data).Cast<InGameCategory>().ToList();
-                SetCacheItem(queryResult.First().Data.PrismicRef, CacheKeys.InGameCategories, retVal);
+                _prismicCacheProvider.SetPrismicCacheItem(queryResult.First().Data.PrismicRef, CacheKeys.InGameCategories, retVal);
 
                 return retVal;
             }
@@ -86,7 +83,7 @@ namespace HeroesRandomiser.Web.Services
 
         public async Task<ICollection<RoleCategory>> GetRoleCategories()
         {
-            var cachedRoleCategories = await TryGetCacheItem<ICollection<RoleCategory>>(CacheKeys.RoleCategories);
+            var cachedRoleCategories = _prismicCacheProvider.TryGetPrismicCacheItem<ICollection<RoleCategory>>(await _prismicService.GetMasterRef(), CacheKeys.RoleCategories);
             if (cachedRoleCategories != null)
                 return cachedRoleCategories;
 
@@ -94,7 +91,7 @@ namespace HeroesRandomiser.Web.Services
             if (queryResult != null && queryResult.Any())
             {
                 var retVal = queryResult.Select(x => x.Data).Cast<RoleCategory>().ToList();
-                SetCacheItem(queryResult.First().Data.PrismicRef, CacheKeys.RoleCategories, retVal);
+                _prismicCacheProvider.SetPrismicCacheItem(queryResult.First().Data.PrismicRef, CacheKeys.RoleCategories, retVal);
 
                 return retVal;
             }
@@ -104,7 +101,7 @@ namespace HeroesRandomiser.Web.Services
 
         public async Task<ICollection<Role>> GetRoles()
         {
-            var cachedRoles = await TryGetCacheItem<ICollection<Role>>(CacheKeys.Roles);
+            var cachedRoles = _prismicCacheProvider.TryGetPrismicCacheItem<ICollection<Role>>(await _prismicService.GetMasterRef(), CacheKeys.Roles);
             if (cachedRoles != null)
                 return cachedRoles;
 
@@ -118,7 +115,7 @@ namespace HeroesRandomiser.Web.Services
                     role.RoleCategory = roleCategories.SingleOrDefault(x => x.Id == role.RoleCategoryLink.Id);
 
                 var retVal = prismicRoles.Cast<Role>().ToList();
-                SetCacheItem(queryResult.First().Data.PrismicRef, CacheKeys.Roles, retVal);
+                _prismicCacheProvider.SetPrismicCacheItem(queryResult.First().Data.PrismicRef, CacheKeys.Roles, retVal);
 
                 return retVal;
             }
@@ -128,7 +125,7 @@ namespace HeroesRandomiser.Web.Services
 
         public async Task<ICollection<Universe>> GetUniverses()
         {
-            var cachedUniverses = await TryGetCacheItem<ICollection<Universe>>(CacheKeys.Universes);
+            var cachedUniverses = _prismicCacheProvider.TryGetPrismicCacheItem<ICollection<Universe>>(await _prismicService.GetMasterRef(), CacheKeys.Universes);
             if (cachedUniverses != null)
                 return cachedUniverses;
 
@@ -136,28 +133,12 @@ namespace HeroesRandomiser.Web.Services
             if (queryResult != null && queryResult.Any())
             {
                 var retVal = queryResult.Select(x => x.Data).Cast<Universe>().ToList();
-                SetCacheItem(queryResult.First().Data.PrismicRef, CacheKeys.Universes, retVal);
+                _prismicCacheProvider.SetPrismicCacheItem(queryResult.First().Data.PrismicRef, CacheKeys.Universes, retVal);
 
                 return retVal;
             }
 
             return new List<Universe>();
-        }
-
-        private async Task<T> TryGetCacheItem<T>(string cacheKey)
-        {
-            var currentRef = _prismicService.PrismicRef ?? await _prismicService.GetMasterRef();
-
-            if (_cache.TryGetValue($"{currentRef.Ref}|{cacheKey}", out T cacheItem))
-                return cacheItem;
-
-            return default(T);
-        }
-
-        private void SetCacheItem<T>(PrismicRef currentRef, string cacheKey, T item)
-        {
-            var options = new MemoryCacheEntryOptions() { SlidingExpiration = TimeSpan.FromHours(3) };
-            _cache.Set($"{currentRef.Ref}|{cacheKey}", item, options);
         }
     }
 }
