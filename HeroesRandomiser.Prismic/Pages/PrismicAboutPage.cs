@@ -11,7 +11,6 @@ namespace HeroesRandomiser.Prismic.Pages
 
         public string Uid { get; set; }
 
-        [JsonProperty("main_body")]
-        public dynamic MainBody { get; set; }
+        public dynamic Body { get; set; }
     }
 }
