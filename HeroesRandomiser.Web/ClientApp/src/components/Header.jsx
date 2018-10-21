@@ -1,36 +1,42 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
+//Style
 import styled from 'styled-components';
+import { media } from '../style/_mediaTemplates';
 
-const HeaderLogo = styled.div`
+const StyledHeader = styled.header`
+    background-color: #4639bf;
+`;
+
+const InnerHeader = styled.div`
+    display: flex;
+    padding: 10px 0 10px 0;
+    align-items: center;
+    justify-content: center;
+
+    ${media.desktop`
+        width: 60%;
+        margin: auto;
+    `}
+`;
+
+const HeaderLogo = styled(Link)`
     display: inline-block;
     background-image: url(https://via.placeholder.com/350x150);
     background-size: cover;
     background-position: center;
-    width: 80px;
-    height: 50px;
-`;
-
-const StyledHeader = styled.header`
-    height: 200px;
-    background-color: #4639bf;
-`;
-
-const HeaderList = styled.ul`
-    display: inline-block;
+    width: 350px;
+    height: 150px;
 `;
 
 class Header extends Component {
     render() {
         return (
             <StyledHeader>
-                <Link to="/">
-                    <HeaderLogo />
-                </Link>
-                <HeaderList>
-                    <Link to="/about">About</Link>
-                </HeaderList>
+                <InnerHeader>
+                    <HeaderLogo to="/"/>
+                </InnerHeader>
             </StyledHeader>
         );
     }
