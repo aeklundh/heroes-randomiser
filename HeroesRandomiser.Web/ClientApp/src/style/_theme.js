@@ -11,7 +11,7 @@ const theme = {
     },
     fonts: {
         main: "'Raleway', sans-serif;",
-        header: "'Ubuntu', sans-serif;"
+        heading: "'Ubuntu', sans-serif;"
     }
 };
 

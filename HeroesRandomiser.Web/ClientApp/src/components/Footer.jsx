@@ -67,7 +67,7 @@ class Footer extends Component {
                     <InnerFooterColumn>
                         <FooterList>
                             <FooterItem to="/about" as={Link}>About</FooterItem>
-                            <FooterItem href="https://github.com/aeklundh/heroes-randomiser" as={"a"} target="_blank">GitHub lorem ipsum dolor sit amet</FooterItem>
+                            <FooterItem href="https://github.com/aeklundh/heroes-randomiser" as={"a"} target="_blank">GitHub</FooterItem>
                         </FooterList>
                     </InnerFooterColumn>
                 </InnerFooter>
