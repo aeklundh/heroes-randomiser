@@ -1,10 +1,11 @@
 const theme = {
     colours: {
         background: "#333149",
-        base1: "#2a2b2d",
-        baseText1: "#fff",
-        base2: "#4639bf",
-        baseText2: "#718098",
+        headerBase: "#221e4a",
+        headerSecondary: "#343054",
+        footerBase: "#2a2b2d",
+        footerSecondary: "#646465",
+        footerText: "#718098",
         mainBase: "#f2f2f2",
         mainBaseText: "#222"
     },

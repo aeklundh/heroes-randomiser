@@ -6,7 +6,9 @@ import styled from 'styled-components';
 import { media } from '../style/_mediaTemplates';
 
 const StyledHeader = styled.header`
-    background-color: #4639bf;
+    background-color: ${props => props.theme.colours.headerBase};
+    box-shadow: 0px 1px 3px 0px ${props => props.theme.colours.headerSecondary};
+    z-index: 2;
 `;
 
 const InnerHeader = styled.div`
