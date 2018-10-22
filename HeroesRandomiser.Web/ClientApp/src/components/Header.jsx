@@ -25,11 +25,13 @@ const InnerHeader = styled.div`
 
 const HeaderLogo = styled(Link)`
     display: inline-block;
-    background-image: url(https://via.placeholder.com/350x150);
+    background-image: url(/logo.svg);
     background-size: cover;
     background-position: center;
     width: 350px;
     height: 150px;
+    filter: drop-shadow( -5px -5px 5px #f2f2f2 );
+    stroke: #fff;
 `;
 
 class Header extends Component {
