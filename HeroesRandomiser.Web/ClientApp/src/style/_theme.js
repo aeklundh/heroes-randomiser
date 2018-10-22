@@ -3,11 +3,12 @@ const theme = {
         background: "#333149",
         headerBase: "#221e4a",
         headerSecondary: "#343054",
-        footerBase: "#2a2b2d",
-        footerSecondary: "#646465",
-        footerText: "#718098",
+        footerBase: "#151317",
+        footerSecondary: "#58456d",
+        footerText: "#847198",
         mainBase: "#f2f2f2",
-        mainBaseText: "#222"
+        mainBaseText: "#222",
+        mainBaseTextAccent: "#7a00e6"
     },
     fonts: {
         main: "'Raleway', sans-serif;",

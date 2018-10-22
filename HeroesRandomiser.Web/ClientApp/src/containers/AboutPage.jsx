@@ -29,7 +29,7 @@ class AboutPage extends Component {
         if (this.props.isFailed) {
             return (
                 <MainBodySection>
-                    <p>Could not fetch hero data</p>
+                    <p>Could not fetch about page</p>
                 </MainBodySection>
             );
         }

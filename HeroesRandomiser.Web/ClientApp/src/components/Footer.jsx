@@ -11,6 +11,10 @@ const StyledFooter = styled.footer`
     color: ${props => props.theme.colours.footerText};
     box-shadow: 0px -1px 3px 0px ${props => props.theme.colours.footerSecondary};
     z-index: 2;
+
+    a {
+        color: ${props => props.theme.colours.footerText};
+    }
 `;
 
 const InnerFooter = styled.div`
@@ -38,7 +42,6 @@ const InnerFooterColumn = styled.div`
 const FooterList = styled.nav`
     display: flex;
     align-self: flex-end;
-    flex-direction: column;
 `;
 
 const FooterItem = styled(Link)`
@@ -47,14 +50,14 @@ const FooterItem = styled(Link)`
     line-height: 0.6em;
     justify-content: flex-end;
     padding: 0.5em;
-    margin-bottom: 0.5em;
+    margin-right: 0.5em;
     color: ${props => props.theme.colours.footerText};
     text-decoration: none;
     border-radius: 5px;
     box-shadow: 0px 0px 3px 0px ${props => props.theme.colours.footerText};
 
     &:last-child{
-        margin-bottom: 0;
+        margin-right: 0;
     }
 `;
 
@@ -66,8 +69,8 @@ class Footer extends Component {
                     <InnerFooterColumn />
                     <InnerFooterColumn>
                         <FooterList>
-                            <FooterItem to="/about" as={Link}>About</FooterItem>
                             <FooterItem href="https://github.com/aeklundh/heroes-randomiser" as={"a"} target="_blank">GitHub</FooterItem>
+                            <FooterItem to="/about" as={Link}>About</FooterItem>
                         </FooterList>
                     </InnerFooterColumn>
                 </InnerFooter>
