@@ -33,5 +33,9 @@ export const MainBody = withRouter(styled.main`
 `);
 
 export const MainBodySection = styled.main`
-    padding: 10px;
+    padding: 5px 20px 5px 20px;
+
+    h1 {
+        text-align: center;
+    }
 `;
