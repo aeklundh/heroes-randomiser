@@ -17,6 +17,11 @@ export const Viewport = withRouter(styled.div`
     h1, h2, h3, h4, h5, h6 {
         font-family: ${props => props.theme.fonts.heading};
     }
+
+    a {
+        color: ${props => props.theme.colours.mainBaseTextAccent};
+        text-decoration: none;
+    }
 `);
 
 export const MainBody = withRouter(styled.main`
@@ -33,5 +38,9 @@ export const MainBody = withRouter(styled.main`
 `);
 
 export const MainBodySection = styled.main`
-    padding: 10px;
+    padding: 5px 20px 5px 20px;
+
+    h1 {
+        text-align: center;
+    }
 `;

@@ -2,7 +2,7 @@
 
 namespace HeroesRandomiser.Tests.Utilities
 {
-    internal static class TestConfigurationUtility
+    internal static class TestConfigurationFactory
     {
         internal static IConfiguration GetTestConfiguration()
         {
