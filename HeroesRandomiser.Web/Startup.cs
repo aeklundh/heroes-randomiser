@@ -34,6 +34,7 @@ namespace HeroesRandomiser.Web
             services.AddScoped<PrismicGenericService>();
             services.AddScoped<IHeroService, PrismicHeroService>();
             services.AddScoped<IPageService, PrismicPageService>();
+            services.AddScoped<RandomiserService>();
 
             services.AddSpaStaticFiles(configuration =>
             {

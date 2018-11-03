@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace HeroesRandomiser.ContentTypes.HeroData
 {
@@ -21,6 +22,8 @@ namespace HeroesRandomiser.ContentTypes.HeroData
         public virtual ICollection<Talent> Talents { get; set; } = new List<Talent>();
 
         public virtual ICollection<InGameCategory> InGameCategories { get; set; } = new List<InGameCategory>();
+
+        public IEnumerable<RoleCategory> RoleCategories => Roles.Select(x => x.RoleCategory);
 
         public virtual Hero MustBePairedWith { get; set; }
     }
