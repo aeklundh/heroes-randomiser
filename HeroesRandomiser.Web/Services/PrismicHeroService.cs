@@ -54,6 +54,9 @@ namespace HeroesRandomiser.Web.Services
                     }
                 }
 
+                foreach (var hero in prismicHeroes.Where(x => x.MustBePairedWithLink.IsValid))
+                    hero.MustBePairedWith = prismicHeroes.SingleOrDefault(x => x.Id == hero.MustBePairedWithLink.Id);
+
                 var retVal = prismicHeroes.Cast<Hero>().ToList();
                 _prismicCacheProvider.SetPrismicCacheItem(queryResult.First().Data.PrismicRef, CacheKeys.Heroes, retVal);
 

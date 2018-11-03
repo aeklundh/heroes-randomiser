@@ -23,9 +23,21 @@ namespace HeroesRandomiser.Web.Services
             var heroes = await _heroService.GetHeroes();
 
             var team = new List<Hero>();
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < teamSize; i++)
             {
-                team.Add(RandomiseHeroForTeam(heroes, team));
+                Hero randomisedHero;
+                if ((teamSize - team.Count) >= 2)
+                {
+                    randomisedHero = RandomiseHeroForTeam(heroes, team);
+                    if (randomisedHero.MustBePairedWith != null)
+                        team.Add(randomisedHero.MustBePairedWith);
+                }
+                else
+                {
+                    randomisedHero = RandomiseHeroForTeam(heroes.Where(x => x.MustBePairedWith == null).ToList(), team);
+                }
+
+                team.Add(randomisedHero);
             }
 
             return team;
@@ -40,14 +52,10 @@ namespace HeroesRandomiser.Web.Services
             var secondaryHeroesSubset = heroes.Where(x => x.Roles.Except(occupiedRoles).Any()).ToList();
 
             if (primaryHeroesSubset.Any())
-            {
                 return GetAnyRandomHero(primaryHeroesSubset);
-            }
 
             if (secondaryHeroesSubset.Any())
-            {
                 return GetAnyRandomHero(secondaryHeroesSubset);
-            }
 
             return GetAnyRandomHero(heroes);
         }
