@@ -57,7 +57,7 @@ namespace HeroesRandomiser.Web.Services
             if (secondaryHeroesSubset.Any())
                 return GetAnyRandomHero(secondaryHeroesSubset);
 
-            return GetAnyRandomHero(heroes);
+            return GetAnyRandomHero(heroes.Except(team).ToList());
         }
 
         public Hero GetAnyRandomHero(ICollection<Hero> heroes)
