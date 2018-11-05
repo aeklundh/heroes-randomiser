@@ -9,7 +9,7 @@ export const Viewport = withRouter(styled.div`
     flex-direction: column;
     width: 100%;
     min-height: 100vh;
-    background-image: url(https://prismic-io.s3.amazonaws.com/heroesrandomiser%2Ffac1e1c3-8bf2-467b-b3a2-bdbc5140206e_gabriel-garcia-marengo-6132-unsplash-shrunk.jpg);
+    background-image: url(https://prismic-io.s3.amazonaws.com/heroesrandomiser%2Fa88e7961-10b7-4ec1-9650-d0ec52f04106_gabriel-garcia-marengo-6132-unsplash-shrunk-1920.jpg);
     background-size: cover;
     background-position: center;
     font-family: ${props => props.theme.fonts.main};
