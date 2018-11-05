@@ -29,6 +29,7 @@ class StartPage extends Component {
     }
 
     componentDidMount = () => {
+        document.title = "Heroes Randomiser";
         this.getHeroData();
     }
 
