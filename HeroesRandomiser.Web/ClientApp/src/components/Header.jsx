@@ -25,7 +25,7 @@ const InnerHeader = styled.div`
 
 const HeaderLogo = styled(Link)`
     display: inline-block;
-    background-image: url(/logo.svg);
+    background-image: url('/logo.svg');
     background-size: cover;
     background-position: center;
     width: 350px;
