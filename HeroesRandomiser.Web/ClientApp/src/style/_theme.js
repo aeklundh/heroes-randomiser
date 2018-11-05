@@ -8,7 +8,8 @@ const theme = {
         footerText: "#847198",
         mainBase: "#f2f2f2",
         mainBaseText: "#222",
-        mainBaseTextAccent: "#7a00e6"
+        mainBaseTextAccent: "#7a00e6",
+        spinner: "#480b7d"
     },
     fonts: {
         main: "'Raleway', sans-serif;",
