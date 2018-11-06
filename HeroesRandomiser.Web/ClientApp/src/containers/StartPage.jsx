@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 
 import Spinner from '../style/Spinner';
 import { MainBodySection } from '../style/pageLayout';
+import StyledButton from '../style/StyledButton';
 
 import { fetchHeroes } from '../store/heroes/actions';
 import { fetchInGameCategories } from '../store/inGameCategories/actions';
@@ -64,7 +65,7 @@ class StartPage extends Component {
                 <div>
                     <p>{name}</p>
                 </div>
-                <button onClick={this.randomiseSingleHero}>Random me!</button>
+                <StyledButton onClick={this.randomiseSingleHero}>Random me!</StyledButton>
             </MainBodySection>
         );
     }
