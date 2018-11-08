@@ -6,9 +6,10 @@ const theme = {
         footerBase: "#151317",
         footerSecondary: "#58456d",
         footerText: "#847198",
-        mainBase: "#f2f2f2",
+        mainBase: "#f9f9f9",
         mainBaseText: "#222",
-        mainBaseTextAccent: "#7a00e6"
+        mainBaseTextAccent: "#7a00e6",
+        spinner: "#480b7d"
     },
     fonts: {
         main: "'Raleway', sans-serif;",

@@ -12,6 +12,8 @@ import Spinner from '../style/Spinner';
 
 class AboutPage extends Component {
     componentDidMount = () => {
+        document.title = "Heroes Randomiser | About";
+
         if (shouldFetchPage(this.props.aboutPage, this.props.isLoading, this.props.isFailed)) {
             this.props.fetchAboutPage();
         }
