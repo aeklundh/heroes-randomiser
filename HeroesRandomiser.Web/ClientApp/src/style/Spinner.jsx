@@ -50,21 +50,21 @@ const InnerOne = styled(InnerBase)`
     left: 0%;
     top: 0%;
     animation: ${RotateOne} 1s linear infinite;
-    border-bottom: 3px solid #222;
+    border-bottom: 3px solid ${props => props.theme.colours.spinner};
 `;
 
 const InnerTwo = styled(InnerBase)`
     right: 0%;
     top: 0%;
     animation: ${RotateTwo} 1s linear infinite;
-    border-right: 3px solid #222;
+    border-right: 3px solid ${props => props.theme.colours.spinner};
 `;
 
 const InnerThree = styled(InnerBase)`
     right: 0%;
     bottom: 0%;
     animation: ${RotateThree} 1s linear infinite;
-    border-top: 3px solid #222;
+    border-top: 3px solid ${props => props.theme.colours.spinner};
 `;
 
 class Spinner extends PureComponent {

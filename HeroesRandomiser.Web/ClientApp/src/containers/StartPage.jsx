@@ -2,22 +2,41 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
+//Style
 import Spinner from '../style/Spinner';
 import { MainBodySection } from '../style/pageLayout';
+import StyledButton from '../style/StyledButton';
 
+//Components
+import TeamContainer from '../components/TeamContainer';
+
+//Actions
 import { fetchHeroes } from '../store/heroes/actions';
 import { fetchInGameCategories } from '../store/inGameCategories/actions';
 import { fetchUniverses } from '../store/universes/actions';
+import { fetchRandomTeam } from '../store/team/actions';
+
+//Utilities
+import { shouldFetchStandardReducable } from '../utilities/genericApiUtilities';
 
 class StartPage extends Component {
     state = {
         randomisedHero: {}
     }
 
-    getHeroData = () => {
-        this.props.fetchHeroes();
-        this.props.fetchInGameCategories();
-        this.props.fetchUniverses();
+    initialise = () => {
+        const { heroes, inGameCategories, universes } = this.props;
+        if (shouldFetchStandardReducable(heroes, "heroes")) {
+            this.props.fetchHeroes();
+        }
+
+        if (shouldFetchStandardReducable(inGameCategories, "inGameCategories")) {
+            this.props.fetchInGameCategories();
+        }
+        
+        if (shouldFetchStandardReducable(universes, "universes")) {
+            this.props.fetchUniverses();
+        }
     }
 
     randomiseSingleHero = () => {
@@ -29,7 +48,8 @@ class StartPage extends Component {
     }
 
     componentDidMount = () => {
-        this.getHeroData();
+        document.title = "Heroes Randomiser";
+        this.initialise();
     }
 
     componentDidUpdate = () => {
@@ -42,6 +62,7 @@ class StartPage extends Component {
         if (this.props.heroes.isLoading) {
             return (
                 <MainBodySection>
+                    <h1>Heroes Randomiser</h1>
                     <Spinner/>
                 </MainBodySection>
             );
@@ -50,20 +71,17 @@ class StartPage extends Component {
         if (this.props.heroes.isFailed) {
             return (
                 <MainBodySection>
+                    <h1>Heroes Randomiser</h1>
                     <p>Could not fetch hero data</p>
                 </MainBodySection>
             );
         }
 
-        const { name } = this.state.randomisedHero;
-
         return (
             <MainBodySection>
                 <h1>Heroes Randomiser</h1>
-                <div>
-                    <p>{name}</p>
-                </div>
-                <button onClick={this.randomiseSingleHero}>Random me!</button>
+                <TeamContainer />
+                <StyledButton onClick={this.props.fetchRandomTeam}>Random me!</StyledButton>
             </MainBodySection>
         );
     }
@@ -72,8 +90,8 @@ class StartPage extends Component {
 const mapStateToProps = state => {
     return {
         heroes: state.heroes,
-        inGameCategories: state.inGameCategories.inGameCategories,
-        universes: state.universes.universes
+        inGameCategories: state.inGameCategories,
+        universes: state.universes
     }
 }
 
@@ -81,7 +99,8 @@ const mapDispatchToProps = dispatch => {
     return {
         fetchHeroes: bindActionCreators(fetchHeroes, dispatch),
         fetchInGameCategories: bindActionCreators(fetchInGameCategories, dispatch),
-        fetchUniverses: bindActionCreators(fetchUniverses, dispatch)
+        fetchUniverses: bindActionCreators(fetchUniverses, dispatch),
+        fetchRandomTeam: bindActionCreators(fetchRandomTeam, dispatch)
     }
 }
 
