@@ -23,7 +23,7 @@ namespace HeroesRandomiser.Web.Services
             var heroes = await _heroService.GetHeroes();
 
             var team = new List<Hero>();
-            for (int i = 0; i < teamSize; i++)
+            for (int i = 0; i < teamSize && team.Count < teamSize; i++)
             {
                 Hero randomisedHero;
                 if ((teamSize - team.Count) >= 2)
