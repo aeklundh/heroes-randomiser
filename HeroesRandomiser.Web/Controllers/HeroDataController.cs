@@ -8,7 +8,8 @@ using System.Threading.Tasks;
 namespace HeroesRandomiser.Web.Controllers
 {
     [Route("api/[controller]")]
-    public class HeroDataController : Controller
+    [ApiController]
+    public class HeroDataController : ControllerBase
     {
         private readonly IHeroService _heroService;
         private readonly IMapper _mapper;
