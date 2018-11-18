@@ -18,7 +18,7 @@ namespace HeroesRandomiser.Web.Services
             _rng = new Random();
         }
 
-        public async Task<IEnumerable<Hero>> GetRandomTeam(int teamSize = 5)
+        public async Task<IEnumerable<Hero>> GetRandomTeam(int teamSize)
         {
             var heroes = await _heroService.GetHeroes();
 

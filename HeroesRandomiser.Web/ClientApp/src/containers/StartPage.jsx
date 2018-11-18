@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 //Style
+import styled from 'styled-components';
 import Spinner from '../style/Spinner';
 import { MainBodySection } from '../style/pageLayout';
 import StyledButton from '../style/StyledButton';
@@ -18,10 +19,16 @@ import { fetchRandomTeam } from '../store/team/actions';
 
 //Utilities
 import { shouldFetchStandardReducable } from '../utilities/genericApiUtilities';
+import TeamSizeSelector from '../components/TeamSizeSelector';
+
+const ControlsContainer = styled.section`
+    display: flex;
+    justify-content: space-around;
+`;
 
 class StartPage extends Component {
     state = {
-        randomisedHero: {}
+        randomisedHero: {},
     }
 
     initialise = () => {
@@ -33,7 +40,7 @@ class StartPage extends Component {
         if (shouldFetchStandardReducable(inGameCategories, "inGameCategories")) {
             this.props.fetchInGameCategories();
         }
-        
+
         if (shouldFetchStandardReducable(universes, "universes")) {
             this.props.fetchUniverses();
         }
@@ -63,7 +70,7 @@ class StartPage extends Component {
             return (
                 <MainBodySection>
                     <h1>Heroes Randomiser</h1>
-                    <Spinner/>
+                    <Spinner />
                 </MainBodySection>
             );
         }
@@ -81,7 +88,10 @@ class StartPage extends Component {
             <MainBodySection>
                 <h1>Heroes Randomiser</h1>
                 <TeamContainer />
-                <StyledButton onClick={this.props.fetchRandomTeam}>Random me!</StyledButton>
+                <ControlsContainer>
+                    <TeamSizeSelector />
+                    <StyledButton onClick={this.props.fetchRandomTeam.bind(this, this.props.clientOptions.teamSize)}>Random me!</StyledButton>
+                </ControlsContainer>
             </MainBodySection>
         );
     }
@@ -89,6 +99,7 @@ class StartPage extends Component {
 
 const mapStateToProps = state => {
     return {
+        clientOptions: state.clientOptions,
         heroes: state.heroes,
         inGameCategories: state.inGameCategories,
         universes: state.universes
