@@ -21,6 +21,6 @@ namespace HeroesRandomiser.Web.Controllers
 
         [HttpGet]
         [Route("about")]
-        public async Task<AboutPageViewModel> GetHeroes() => _mapper.Map<AboutPageViewModel>(await _pageService.GetAboutPage());
+        public async Task<AboutPageViewModel> GetAboutPage() => _mapper.Map<AboutPageViewModel>(await _pageService.GetAboutPage());
     }
 }
