@@ -18,6 +18,8 @@ namespace HeroesRandomiser.Web.Caching
         internal void SetMasterRef(PrismicRef prismicRef) =>
             _cacheProvider.SetCacheItem(CacheKeys.MasterRef, prismicRef, new MemoryCacheEntryOptions() { AbsoluteExpiration = DateTimeOffset.UtcNow.AddMinutes(10) });
 
+        internal void ClearMasterRef() => _cacheProvider.ClearCacheItem(CacheKeys.MasterRef);
+
         internal T TryGetPrismicCacheItem<T>(PrismicRef prismicRef, string cacheKeyBase) =>
             _cacheProvider.TryGetCacheItem<T>(FormatCacheKey(prismicRef, cacheKeyBase));
 

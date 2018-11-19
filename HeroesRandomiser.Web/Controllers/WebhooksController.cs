@@ -32,13 +32,20 @@ namespace HeroesRandomiser.Web.Controllers
             {
                 if (_prismicWebhookSecretKey.Equals(dto.Secret, StringComparison.Ordinal))
                 {
-                    _cacheProvider.SetMasterRef(new PrismicRef()
+                    if (!string.IsNullOrEmpty(dto.MasterRef))
                     {
-                        Id = "master",
-                        Ref = dto.MasterRef,
-                        Label = "Master",
-                        IsMasterRef = true
-                    });
+                        _cacheProvider.SetMasterRef(new PrismicRef()
+                        {
+                            Id = "master",
+                            Ref = dto.MasterRef,
+                            Label = "Master",
+                            IsMasterRef = true
+                        });
+                    }
+                    else
+                    {
+                        _cacheProvider.ClearMasterRef();
+                    }
 
                     return Ok();
                 }

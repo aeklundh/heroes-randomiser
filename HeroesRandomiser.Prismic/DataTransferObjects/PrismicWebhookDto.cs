@@ -9,7 +9,6 @@ namespace HeroesRandomiser.Prismic.DataTransferObjects
         [Required]
         public string Secret { get; set; }
 
-        [Required]
         public string MasterRef { get; set; }
 
         public string Domain { get; set; }
