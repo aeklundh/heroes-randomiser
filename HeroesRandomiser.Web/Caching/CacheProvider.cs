@@ -22,5 +22,7 @@ namespace HeroesRandomiser.Web.Caching
 
         internal void SetCacheItem<T>(string cacheKey, T item, MemoryCacheEntryOptions options = null) =>
             _cache.Set(cacheKey, item, options ?? new MemoryCacheEntryOptions() { SlidingExpiration = TimeSpan.FromHours(3) });
+
+        internal void ClearCacheItem(string cacheKey) => _cache.Remove(cacheKey);
     }
 }
