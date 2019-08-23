@@ -8,7 +8,7 @@
     <SpaRoot>ClientApp\</SpaRoot>
     <DefaultItemExcludes>$(DefaultItemExcludes);$(SpaRoot)node_modules\**</DefaultItemExcludes>
     <ApplicationIcon>ClientApp\public\favicon.ico</ApplicationIcon>
-    <RuntimeIdentifiers>ubuntu.18.04-x64</RuntimeIdentifiers>
+    <RuntimeIdentifiers>ubuntu.19.04-x64</RuntimeIdentifiers>
   </PropertyGroup>
 
   <ItemGroup>
