@@ -1,6 +1,14 @@
 ﻿{
   "profiles": {
-    "HeroesRandomiser.Web": {
+    "Container development": {
+      "commandName": "Project",
+      "launchBrowser": false,
+      "applicationUrl": "https://0.0.0.0:8443;http://0.0.0.0:8080",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    "Local development": {
       "commandName": "Project",
       "launchBrowser": false,
       "applicationUrl": "https://localhost:5001;http://localhost:5000",
