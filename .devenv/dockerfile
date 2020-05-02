@@ -1,0 +1,7 @@
+FROM mcr.microsoft.com/dotnet/core/sdk:2.1.805-alpine3.11
+
+ENV NODE_VERSION 12.16.2
+
+RUN apk update && \
+    apk --no-cache add unzip curl procps nodejs=12.15.0-r1 npm yarn  && \
+    curl -sSL https://aka.ms/getvsdbgsh | /bin/sh /dev/stdin -v latest -l /vsdbg
