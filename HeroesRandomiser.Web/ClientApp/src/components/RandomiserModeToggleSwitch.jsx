@@ -1,5 +1,13 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+//Style
 import styled from 'styled-components';
+
+//State
+import { toggleRandomiserMode } from '../store/clientOptions/actions';
+import { TEAM_MODE } from '../store/clientOptions/optionStates';
 
 const OnOffWrapper = styled.div`
     position: relative;
@@ -80,16 +88,34 @@ const OnOffCheckbox = styled.input.attrs({ type: "checkbox" })`
     }
 `;
 
-const Switch = ({ isChecked, handleOnChange, id, }) => {
-    return (
-        <OnOffWrapper>
-            <OnOffCheckbox id={id} defaultChecked={isChecked} onChange={handleOnChange} />
-            <OnOffLabel htmlFor={id}>
-                <OnOffInner />
-                <OnOffInnerSwitch />
-            </OnOffLabel>
-        </OnOffWrapper>
-    );
-};
+class RandomiserModeToggleSwitch extends Component {
+    static defaultProps = {
+        id: "randomiserModeToggle"
+    };
 
-export default Switch;
+    render() {
+        return (
+            <OnOffWrapper>
+                <OnOffCheckbox id={this.props.id} checked={this.props.clientOptions.randomiserMode === TEAM_MODE} />
+                <OnOffLabel htmlFor={this.props.id} onClick={() => { this.props.toggleRandomiserMode(this.props.clientOptions.randomiserMode) }} >
+                    <OnOffInner />
+                    <OnOffInnerSwitch />
+                </OnOffLabel>
+            </OnOffWrapper>
+        );
+    }
+}
+
+const mapStateToProps = state => {
+    return {
+        clientOptions: state.clientOptions,
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        toggleRandomiserMode: bindActionCreators(toggleRandomiserMode, dispatch),
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(RandomiserModeToggleSwitch);

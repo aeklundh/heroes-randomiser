@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 
 //Components
-import ToggleSwitch from './RandomiserModeToggleSwitch';
+import RandomiserModeToggleSwitch from './RandomiserModeToggleSwitch';
 
 const ModeSelectorWrapper = styled.div`
     display: flex;
@@ -16,7 +16,7 @@ class RandomiserModeSelector extends Component {
     render() {
         return (
             <ModeSelectorWrapper>
-                <ToggleSwitch id="modeSelector" isChecked="checked" onChange={(e) => { console.info(e) }} />
+                <RandomiserModeToggleSwitch />
             </ModeSelectorWrapper>
         );
     }
