@@ -1,6 +1,6 @@
 import { FETCH_TEAM_BEGIN, FETCH_TEAM_SUCCESS, FETCH_TEAM_FAILURE } from './actionTypes';
 
-export const fetchRandomTeam = (teamSize = 5) => dispatch => {
+export const fetchRandomTeam = (teamSize) => dispatch => {
     dispatch({
         type: FETCH_TEAM_BEGIN
     });

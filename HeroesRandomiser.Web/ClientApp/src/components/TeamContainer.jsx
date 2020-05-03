@@ -38,7 +38,7 @@ const HeroList = styled.ul`
 class TeamContainer extends Component {
     componentDidMount = () => {
         if (shouldFetchStandardReducable(this.props.team, "team")) {
-            this.props.fetchRandomTeam();
+            this.props.fetchRandomTeam(this.props.clientOptions.teamSize);
         }
     }
 
@@ -64,6 +64,7 @@ const mapDispatchToProps = dispatch => {
 
 const mapStateToProps = state => {
     return {
+        clientOptions: state.clientOptions,
         team: state.team
     }
 }
