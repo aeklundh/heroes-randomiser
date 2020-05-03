@@ -10,7 +10,7 @@ import { MainBodySection } from '../style/pageLayout';
 import TeamContainer from '../components/TeamContainer';
 import TeamSizeSelector from '../components/TeamSizeSelector';
 import RandomiserModeSelectorBar from '../components/RandomiserModeSelectorBar';
-import StyledButton from '../components/StyledButton';
+import ControlButton from '../components/ControlButton';
 import Spinner from '../components/Spinner';
 
 //Actions
@@ -92,7 +92,7 @@ class StartPage extends Component {
                 <TeamContainer />
                 <ControlsContainer>
                     <TeamSizeSelector />
-                    <StyledButton onClick={this.props.fetchRandomTeam.bind(this, this.props.clientOptions.teamSize)}>Random me!</StyledButton>
+                    <ControlButton onClick={this.props.fetchRandomTeam.bind(this, this.props.clientOptions.teamSize)}>Random me!</ControlButton>
                 </ControlsContainer>
             </MainBodySection>
         );
