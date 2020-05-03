@@ -8,7 +8,7 @@ import { fetchAboutPage } from '../store/pages/actions';
 
 //Style
 import { MainBodySection } from '../style/pageLayout';
-import Spinner from '../style/Spinner';
+import Spinner from '../components/Spinner';
 
 class AboutPage extends Component {
     componentDidMount = () => {

@@ -4,14 +4,14 @@ import { bindActionCreators } from 'redux';
 
 //Style
 import styled from 'styled-components';
-import Spinner from '../style/Spinner';
 import { MainBodySection } from '../style/pageLayout';
-import StyledButton from '../style/StyledButton';
 
 //Components
 import TeamContainer from '../components/TeamContainer';
 import TeamSizeSelector from '../components/TeamSizeSelector';
 import RandomiserModeSelectorBar from '../components/RandomiserModeSelectorBar';
+import StyledButton from '../components/StyledButton';
+import Spinner from '../components/Spinner';
 
 //Actions
 import { fetchHeroes } from '../store/heroes/actions';
