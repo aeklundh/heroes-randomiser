@@ -10,6 +10,8 @@ import StyledButton from '../style/StyledButton';
 
 //Components
 import TeamContainer from '../components/TeamContainer';
+import TeamSizeSelector from '../components/TeamSizeSelector';
+import RandomiserModeSelectorBar from '../components/RandomiserModeSelectorBar';
 
 //Actions
 import { fetchHeroes } from '../store/heroes/actions';
@@ -19,7 +21,6 @@ import { fetchRandomTeam } from '../store/team/actions';
 
 //Utilities
 import { shouldFetchStandardReducable } from '../utilities/genericApiUtilities';
-import TeamSizeSelector from '../components/TeamSizeSelector';
 
 const ControlsContainer = styled.section`
     display: flex;
@@ -87,6 +88,7 @@ class StartPage extends Component {
         return (
             <MainBodySection>
                 <h1>Heroes Randomiser</h1>
+                <RandomiserModeSelectorBar />
                 <TeamContainer />
                 <ControlsContainer>
                     <TeamSizeSelector />

@@ -1,7 +1,7 @@
 import styled  from 'styled-components';
 
 export default styled.button`
-    background-color: #9c6cf9;
+    background-color: ${props => props.theme.colours.control};
     color: #fff;
     border: 2px solid #9568ec;
     border-radius: 3px;
@@ -10,7 +10,7 @@ export default styled.button`
     cursor: pointer;
 
     &:hover {
-        background-color: #895fdc;
+        background-color: ${props => props.theme.colours.controlDarker};
         border: 2px solid #855cd6;
     }
 
