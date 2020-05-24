@@ -7,7 +7,7 @@ import { linkResolver, richTextRender } from '../utilities/prismicUtilities';
 import { fetchAboutPage } from '../store/pages/actions';
 
 //Style
-import { MainBodySection } from '../style/pageLayout';
+import { MainBodyInner } from '../style/pageLayout';
 import Spinner from '../components/Spinner';
 
 class AboutPage extends Component {
@@ -22,24 +22,24 @@ class AboutPage extends Component {
     render() {
         if (this.props.isLoading) {
             return (
-                <MainBodySection>
+                <MainBodyInner>
                     <Spinner />
-                </MainBodySection>
+                </MainBodyInner>
             );
         }
 
         if (this.props.isFailed) {
             return (
-                <MainBodySection>
+                <MainBodyInner>
                     <p>Could not fetch about page</p>
-                </MainBodySection>
+                </MainBodyInner>
             );
         }
         
         return (
-            <MainBodySection>
+            <MainBodyInner>
                 {richTextRender(this.props.aboutPage.body, linkResolver)}
-            </MainBodySection>
+            </MainBodyInner>
         );
     }
 }

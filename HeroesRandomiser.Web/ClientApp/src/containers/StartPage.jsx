@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 //Style
-import { MainBodySection } from '../style/pageLayout';
+import { MainBodyInner } from '../style/pageLayout';
 
 //Components
 import RandomiserModeSelectorBar from '../components/RandomiserModeSelectorBar';
@@ -38,19 +38,19 @@ class StartPage extends Component {
 
     renderLoading = () => {
         return (
-            <MainBodySection>
+            <MainBodyInner>
                 <h1>Heroes Randomiser</h1>
                 <Spinner />
-            </MainBodySection>
+            </MainBodyInner>
         );
     }
 
     renderFailed = () => {
         return (
-            <MainBodySection>
+            <MainBodyInner>
                 <h1>Heroes Randomiser</h1>
                 <p>Could not fetch hero data</p>
-            </MainBodySection>
+            </MainBodyInner>
         );
     }
     
@@ -69,12 +69,12 @@ class StartPage extends Component {
         }
 
         return (
-            <MainBodySection>
+            <MainBodyInner>
                 <h1>Heroes Randomiser</h1>
                 <RandomiserModeSelectorBar />
                 <TeamContainer />
                 <RandomiserOptionControlsContainer />
-            </MainBodySection>
+            </MainBodyInner>
         );
     }
 }
