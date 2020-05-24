@@ -21,10 +21,6 @@ import { fetchRandomTeam } from '../store/team/actions';
 import { shouldFetchStandardReducable } from '../utilities/genericApiUtilities';
 
 class StartPage extends Component {
-    state = {
-        randomisedHero: {},
-    }
-
     initialise = () => {
         const { heroes, inGameCategories, universes } = this.props;
         if (shouldFetchStandardReducable(heroes, "heroes")) {
@@ -38,14 +34,6 @@ class StartPage extends Component {
         if (shouldFetchStandardReducable(universes, "universes")) {
             this.props.fetchUniverses();
         }
-    }
-
-    randomiseSingleHero = () => {
-        const { heroes } = this.props.heroes;
-        this.setState({
-            ...this.state,
-            randomisedHero: heroes[[Math.floor(Math.random() * heroes.length)]]
-        });
     }
 
     renderLoading = () => {
@@ -69,12 +57,6 @@ class StartPage extends Component {
     componentDidMount = () => {
         document.title = "Heroes Randomiser";
         this.initialise();
-    }
-
-    componentDidUpdate = () => {
-        if (!this.state.randomisedHero["id"] && this.props.heroes.heroes.length) {
-            this.randomiseSingleHero();
-        }
     }
 
     render() {
