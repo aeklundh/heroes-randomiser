@@ -3,15 +3,13 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 //Style
-import styled from 'styled-components';
 import { MainBodySection } from '../style/pageLayout';
 
 //Components
-import TeamContainer from '../components/TeamContainer';
-import TeamSizeSelector from '../components/TeamSizeSelector';
 import RandomiserModeSelectorBar from '../components/RandomiserModeSelectorBar';
-import ControlButton from '../components/ControlButton';
+import RandomiserOptionControlsContainer from '../components/RandomiserOptionControlsContainer';
 import Spinner from '../components/Spinner';
+import TeamContainer from '../components/TeamContainer';
 
 //Actions
 import { fetchHeroes } from '../store/heroes/actions';
@@ -21,11 +19,6 @@ import { fetchRandomTeam } from '../store/team/actions';
 
 //Utilities
 import { shouldFetchStandardReducable } from '../utilities/genericApiUtilities';
-
-const ControlsContainer = styled.section`
-    display: flex;
-    justify-content: space-around;
-`;
 
 class StartPage extends Component {
     state = {
@@ -55,6 +48,24 @@ class StartPage extends Component {
         });
     }
 
+    renderLoading = () => {
+        return (
+            <MainBodySection>
+                <h1>Heroes Randomiser</h1>
+                <Spinner />
+            </MainBodySection>
+        );
+    }
+
+    renderFailed = () => {
+        return (
+            <MainBodySection>
+                <h1>Heroes Randomiser</h1>
+                <p>Could not fetch hero data</p>
+            </MainBodySection>
+        );
+    }
+    
     componentDidMount = () => {
         document.title = "Heroes Randomiser";
         this.initialise();
@@ -68,21 +79,11 @@ class StartPage extends Component {
 
     render() {
         if (this.props.heroes.isLoading) {
-            return (
-                <MainBodySection>
-                    <h1>Heroes Randomiser</h1>
-                    <Spinner />
-                </MainBodySection>
-            );
+            this.renderLoading();
         }
 
         if (this.props.heroes.isFailed) {
-            return (
-                <MainBodySection>
-                    <h1>Heroes Randomiser</h1>
-                    <p>Could not fetch hero data</p>
-                </MainBodySection>
-            );
+            this.renderFailed();
         }
 
         return (
@@ -90,10 +91,7 @@ class StartPage extends Component {
                 <h1>Heroes Randomiser</h1>
                 <RandomiserModeSelectorBar />
                 <TeamContainer />
-                <ControlsContainer>
-                    <TeamSizeSelector />
-                    <ControlButton onClick={this.props.fetchRandomTeam.bind(this, this.props.clientOptions.teamSize)}>Random me!</ControlButton>
-                </ControlsContainer>
+                <RandomiserOptionControlsContainer />
             </MainBodySection>
         );
     }
