@@ -9,7 +9,7 @@ import { MainBodyInner } from '../style/pageLayout';
 import RandomiserModeSelectorBar from '../components/RandomiserModeSelectorBar';
 import RandomiserOptionControlsContainer from '../components/RandomiserOptionControlsContainer';
 import Spinner from '../components/Spinner';
-import TeamContainer from '../components/TeamContainer';
+import RandomisationResultContainer from '../components/RandomisationResultContainer';
 
 //Actions
 import { fetchHeroes } from '../store/heroes/actions';
@@ -72,7 +72,7 @@ class StartPage extends Component {
             <MainBodyInner>
                 <h1>Heroes Randomiser</h1>
                 <RandomiserModeSelectorBar />
-                <TeamContainer />
+                <RandomisationResultContainer />
                 <RandomiserOptionControlsContainer />
             </MainBodyInner>
         );
