@@ -25,7 +25,7 @@ namespace HeroesRandomiser.Web.Controllers
         [Route("team")]
         public async Task<IEnumerable<HeroViewModel>> GetRandomTeam(int teamSize = 5) => _mapper.Map<IEnumerable<HeroViewModel>>(await _randomiserService.GetRandomTeam(teamSize));
 
-        [HttpGet]
+        [HttpPost]
         [Route("single")]
         public async Task<HeroViewModel> GetRandomHero(RandomHeroOptions options) => _mapper.Map<HeroViewModel>(await _randomiserService.GetRandomHero(options));
     }
