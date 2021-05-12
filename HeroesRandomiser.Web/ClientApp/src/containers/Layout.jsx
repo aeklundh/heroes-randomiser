@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 
-import { Viewport, MainBody } from '../style/pageLayout';
+import { Viewport, MainBodyWrapper } from '../style/pageLayout';
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 
@@ -13,10 +13,10 @@ class Layout extends Component {
         return (
             <Viewport>
                 <Header />
-                <MainBody>
+                <MainBodyWrapper>
                     <Route exact path="/" component={StartPage} />
                     <Route path="/about" component={AboutPage} />
-                </MainBody>
+                </MainBodyWrapper>
                 <Footer />
             </Viewport>
         );

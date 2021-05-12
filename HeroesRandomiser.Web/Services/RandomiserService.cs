@@ -1,4 +1,5 @@
 ﻿using HeroesRandomiser.ContentTypes.HeroData;
+using HeroesRandomiser.Web.Models;
 using HeroesRandomiser.Web.Services.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -23,7 +24,7 @@ namespace HeroesRandomiser.Web.Services
             var heroes = await _heroService.GetHeroes();
 
             var team = new List<Hero>();
-            for (int i = 0; i < teamSize && team.Count < teamSize; i++)
+            for (var i = 0; i < teamSize && team.Count < teamSize; i++)
             {
                 Hero randomisedHero;
                 if ((teamSize - team.Count) >= 2)
@@ -60,8 +61,27 @@ namespace HeroesRandomiser.Web.Services
             return GetAnyRandomHero(heroes.Except(team).ToList());
         }
 
+        public async Task<Hero> GetRandomHero(RandomHeroOptions options = null)
+        {
+            var heroes = await _heroService.GetHeroes();
+
+            if (options?.InGameCategoryIds != null && options.InGameCategoryIds.Any())
+                heroes = heroes.Where(x => x.InGameCategories.Any(y => options.InGameCategoryIds.Contains(y.Id))).ToList();
+
+            if (options?.UniverseIds!= null && options.UniverseIds.Any())
+                heroes = heroes.Where(x => options.UniverseIds.Contains(x.Universe.Id)).ToList();
+
+            if (options?.HeroIds != null && options.HeroIds.Any())
+                heroes = heroes.Where(x => options.HeroIds.Contains(x.Id)).ToList();
+
+            return GetAnyRandomHero(heroes);
+        }
+
         public Hero GetAnyRandomHero(ICollection<Hero> heroes)
         {
+            if (!heroes.Any())
+                return null;
+
             var randomisedIndex = _rng.Next(0, heroes.Count);
             return heroes.ElementAt(randomisedIndex);
         }

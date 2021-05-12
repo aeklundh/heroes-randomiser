@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using HeroesRandomiser.Web.Models;
 using HeroesRandomiser.Web.Services;
 using HeroesRandomiser.Web.ViewModels.HeroData;
 using Microsoft.AspNetCore.Mvc;
@@ -23,5 +24,9 @@ namespace HeroesRandomiser.Web.Controllers
         [HttpGet]
         [Route("team")]
         public async Task<IEnumerable<HeroViewModel>> GetRandomTeam(int teamSize = 5) => _mapper.Map<IEnumerable<HeroViewModel>>(await _randomiserService.GetRandomTeam(teamSize));
+
+        [HttpPost]
+        [Route("single")]
+        public async Task<HeroViewModel> GetRandomHero(RandomHeroOptions options) => _mapper.Map<HeroViewModel>(await _randomiserService.GetRandomHero(options));
     }
 }
