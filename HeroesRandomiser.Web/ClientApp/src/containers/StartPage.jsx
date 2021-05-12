@@ -3,13 +3,13 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 //Style
-import styled from 'styled-components';
-import Spinner from '../style/Spinner';
-import { MainBodySection } from '../style/pageLayout';
-import StyledButton from '../style/StyledButton';
+import { MainBodyInner } from '../style/pageLayout';
 
 //Components
-import TeamContainer from '../components/TeamContainer';
+import RandomiserModeSelectorBar from '../components/RandomiserModeSelectorBar';
+import RandomiserOptionControlsContainer from '../components/RandomiserOptionControlsContainer';
+import Spinner from '../components/Spinner';
+import RandomisationResultContainer from '../components/RandomisationResultContainer';
 
 //Actions
 import { fetchHeroes } from '../store/heroes/actions';
@@ -19,18 +19,8 @@ import { fetchRandomTeam } from '../store/team/actions';
 
 //Utilities
 import { shouldFetchStandardReducable } from '../utilities/genericApiUtilities';
-import TeamSizeSelector from '../components/TeamSizeSelector';
-
-const ControlsContainer = styled.section`
-    display: flex;
-    justify-content: space-around;
-`;
 
 class StartPage extends Component {
-    state = {
-        randomisedHero: {},
-    }
-
     initialise = () => {
         const { heroes, inGameCategories, universes } = this.props;
         if (shouldFetchStandardReducable(heroes, "heroes")) {
@@ -46,53 +36,45 @@ class StartPage extends Component {
         }
     }
 
-    randomiseSingleHero = () => {
-        const { heroes } = this.props.heroes;
-        this.setState({
-            ...this.state,
-            randomisedHero: heroes[[Math.floor(Math.random() * heroes.length)]]
-        });
+    renderLoading = () => {
+        return (
+            <MainBodyInner>
+                <h1>Heroes Randomiser</h1>
+                <Spinner />
+            </MainBodyInner>
+        );
     }
 
+    renderFailed = () => {
+        return (
+            <MainBodyInner>
+                <h1>Heroes Randomiser</h1>
+                <p>Could not fetch hero data</p>
+            </MainBodyInner>
+        );
+    }
+    
     componentDidMount = () => {
         document.title = "Heroes Randomiser";
         this.initialise();
     }
 
-    componentDidUpdate = () => {
-        if (!this.state.randomisedHero["id"] && this.props.heroes.heroes.length) {
-            this.randomiseSingleHero();
-        }
-    }
-
     render() {
         if (this.props.heroes.isLoading) {
-            return (
-                <MainBodySection>
-                    <h1>Heroes Randomiser</h1>
-                    <Spinner />
-                </MainBodySection>
-            );
+            this.renderLoading();
         }
 
         if (this.props.heroes.isFailed) {
-            return (
-                <MainBodySection>
-                    <h1>Heroes Randomiser</h1>
-                    <p>Could not fetch hero data</p>
-                </MainBodySection>
-            );
+            this.renderFailed();
         }
 
         return (
-            <MainBodySection>
+            <MainBodyInner>
                 <h1>Heroes Randomiser</h1>
-                <TeamContainer />
-                <ControlsContainer>
-                    <TeamSizeSelector />
-                    <StyledButton onClick={this.props.fetchRandomTeam.bind(this, this.props.clientOptions.teamSize)}>Random me!</StyledButton>
-                </ControlsContainer>
-            </MainBodySection>
+                <RandomiserModeSelectorBar />
+                <RandomisationResultContainer />
+                <RandomiserOptionControlsContainer />
+            </MainBodyInner>
         );
     }
 }

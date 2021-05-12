@@ -1,0 +1,10 @@
+version: "2"
+services:
+  devenv:
+    container_name: "docker-compose-devenv"
+    build: .
+    volumes:
+      - "../:/devenv"
+    ports:
+      - "8080:8080"
+      - "8443:8443"
