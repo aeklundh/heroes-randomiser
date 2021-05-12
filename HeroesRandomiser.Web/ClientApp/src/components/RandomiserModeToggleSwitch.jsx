@@ -96,7 +96,7 @@ class RandomiserModeToggleSwitch extends Component {
     render() {
         return (
             <OnOffWrapper>
-                <OnOffCheckbox id={this.props.id} checked={this.props.clientOptions.randomiserMode === TEAM_MODE} />
+                <OnOffCheckbox id={this.props.id} defaultChecked={this.props.clientOptions.randomiserMode === TEAM_MODE} />
                 <OnOffLabel htmlFor={this.props.id} onClick={() => { this.props.toggleRandomiserMode(this.props.clientOptions.randomiserMode) }} >
                     <OnOffInner />
                     <OnOffInnerSwitch />
