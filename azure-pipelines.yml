@@ -7,7 +7,7 @@ pool:
 variables:
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
-  buildConfiguration: 'Release'
+  buildConfiguration: Release
 
 steps:
 - task: NodeTool@0
@@ -30,7 +30,7 @@ steps:
   inputs:
     command: 'publish'
     publishWebProjects: true
-    arguments: '-c Release -o $(build.artifactStagingDirectory) --self-contained true --runtime ubuntu.20.04-x64 HeroesRandomiser.Web.csproj'
+    arguments: '-c $(buildConfiguration) -o "$(build.artifactStagingDirectory)" --self-contained true --runtime ubuntu.20.04-x64 HeroesRandomiser.Web.csproj'
     workingDirectory: './HeroesRandomiser.Web'
 
 - task: PublishBuildArtifacts@1
