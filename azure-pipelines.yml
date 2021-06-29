@@ -7,33 +7,39 @@ pool:
 variables:
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
-  buildConfiguration: 'Release'
+  buildConfiguration: Release
 
 steps:
 - task: NodeTool@0
   inputs:
     versionSpec: '14.16.1'
+  displayName: "Install node.js"
 
-- task: NuGetToolInstaller@1
-
-- task: NuGetCommand@2
+- task: UseDotNet@2
   inputs:
-    restoreSolution: '$(solution)'
+    packageType: 'sdk'
+    version: '5.0.x'
+  displayName: "Install .NET SDK"
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'restore'
+    projects: '**/*.csproj'
+    feedsToUse: 'config'
+    nugetConfigPath: './nuget.config'
+  displayName: "dotnet restore"
 
 - task: DotNetCoreCLI@2
   inputs:
     command: 'publish'
     publishWebProjects: true
-    arguments: '-c release -o $(build.artifactStagingDirectory) --self-contained true --runtime ubuntu.19.04-x64 HeroesRandomiser.Web.csproj'
+    arguments: '-c $(buildConfiguration) -o $(build.artifactStagingDirectory) --self-contained true --runtime ubuntu.20.04-x64 --no-restore'
     workingDirectory: './HeroesRandomiser.Web'
-
-- task: VSTest@2
-  inputs:
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
+  displayName: "dotnet publish"
 
 - task: PublishBuildArtifacts@1
   inputs:
     PathtoPublish: '$(build.artifactStagingDirectory)'
     ArtifactName: 'drop'
     publishLocation: 'Container'
+  displayName: "Publish artefact"
