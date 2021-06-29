@@ -33,7 +33,7 @@ steps:
   inputs:
     command: 'publish'
     publishWebProjects: true
-    arguments: '-c $(buildConfiguration) -o $(build.artifactStagingDirectory) --self-contained true --runtime ubuntu.20.04-x64'
+    arguments: '-c $(buildConfiguration) -o $(build.artifactStagingDirectory) --self-contained true --runtime ubuntu.20.04-x64 --no-restore'
     workingDirectory: './HeroesRandomiser.Web'
   displayName: "dotnet publish"
 
