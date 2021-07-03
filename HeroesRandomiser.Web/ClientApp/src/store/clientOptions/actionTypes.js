@@ -1,1 +1,2 @@
 export const SET_TEAMSIZE = "SET_TEAMSIZE";
+export const SET_RANDOMISER_MODE = "SET_RANDOMISER_MODE";

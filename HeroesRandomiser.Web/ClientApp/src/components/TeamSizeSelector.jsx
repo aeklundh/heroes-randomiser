@@ -35,10 +35,6 @@ class TeamSizeSelector extends Component {
         return (
             <StyledTeamSizeSelector onChange={this.onTeamSizeChanged.bind(this)}>
                 <TeamSizeControl>
-                    <span>1</span>
-                    <input type="radio" value={1} name="teamSize" defaultChecked={this.props.clientOptions.teamSize === 1} />
-                </TeamSizeControl>
-                <TeamSizeControl>
                     <span>2</span>
                     <input type="radio" value={2} name="teamSize" defaultChecked={this.props.clientOptions.teamSize === 2} />
                 </TeamSizeControl>

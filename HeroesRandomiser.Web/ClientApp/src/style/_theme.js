@@ -9,6 +9,8 @@ const theme = {
         mainBase: "#f9f9f9",
         mainBaseText: "#222",
         mainBaseTextAccent: "#7a00e6",
+        control: "#9c6cf9",
+        controlDarker: "#895fdc",
         spinner: "#480b7d"
     },
     fonts: {

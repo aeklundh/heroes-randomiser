@@ -37,7 +37,7 @@ export const Viewport = withRouter(styled.div`
     }
 `);
 
-export const MainBody = withRouter(styled.main`
+export const MainBodyWrapper = withRouter(styled.div`
     flex: 1;
     margin: auto;
     min-height: 500px;
@@ -51,7 +51,7 @@ export const MainBody = withRouter(styled.main`
     `}
 `);
 
-export const MainBodySection = styled.main`
+export const MainBodyInner = styled.main`
     padding: 5px 20px 5px 20px;
 
     h1 {
