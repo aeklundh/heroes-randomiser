@@ -28,8 +28,7 @@ namespace HeroesRandomiser.Web
             services.AddMemoryCache();
             services.AddAutoMapper();
             services.AddMvc(options => options.EnableEndpointRouting = false)
-                .AddNewtonsoftJson()
-                .SetCompatibilityVersion(CompatibilityVersion.Latest);
+                .AddNewtonsoftJson();
 
             services.AddScoped<HttpClient>();
             services.AddScoped<CacheProvider>();
