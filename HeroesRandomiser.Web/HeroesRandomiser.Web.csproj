@@ -8,7 +8,7 @@
     <SpaRoot>ClientApp\</SpaRoot>
     <DefaultItemExcludes>$(DefaultItemExcludes);$(SpaRoot)node_modules\**</DefaultItemExcludes>
     <ApplicationIcon>ClientApp\public\favicon.ico</ApplicationIcon>
-    <RuntimeIdentifiers>ubuntu.20.04-x64</RuntimeIdentifiers>
+    <RuntimeIdentifiers>ubuntu.22.04-x64</RuntimeIdentifiers>
   </PropertyGroup>
 
   <ItemGroup>
