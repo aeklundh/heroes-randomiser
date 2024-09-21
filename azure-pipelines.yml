@@ -18,7 +18,7 @@ steps:
 - task: UseDotNet@2
   inputs:
     packageType: 'sdk'
-    version: '6.0.x'
+    version: '8.0.x'
   displayName: "Install .NET SDK"
 
 - task: DotNetCoreCLI@2
@@ -33,7 +33,7 @@ steps:
   inputs:
     command: 'publish'
     publishWebProjects: true
-    arguments: '-c $(buildConfiguration) -o $(build.artifactStagingDirectory) --self-contained true --runtime ubuntu.22.04-x64 --no-restore'
+    arguments: '-c $(buildConfiguration) -o $(build.artifactStagingDirectory) --self-contained true --runtime ubuntu.24.04-x64 --no-restore'
     workingDirectory: './HeroesRandomiser.Web'
   displayName: "dotnet publish"
 
